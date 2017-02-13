@@ -1,0 +1,21 @@
+{
+  "name": "chat",
+  "description": "Sample chat app",
+  "main": "server.js",
+  "authors": [
+    "Ashik"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "moment": "^2.17.1"
+  }
+}

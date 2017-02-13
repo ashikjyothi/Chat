@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>CHAT</title>
+        
+        <!-- Css Style Sheet -->
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap/dist/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Chat</h1>
+            <div ui-view="content"></div>
+        </div>
+ 
+        <!-- User Authentication -->        
+        <script type="text/javascript">
+            window.user = <%- user || null %>;
+        </script>
+        
+        <!-- Required Bower Modules -->
+        <script src="socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="libs/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="libs/angular/angular.js"></script>
+        <script type="text/javascript" src="libs/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.js"></script>
+
+        <!-- App modules -->
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="services/session.js"></script>
+        <script type="text/javascript" src="routes.js"></script>
+        <script type="text/javascript" src="components/chat/chatController.js"></script>
+        <script type="text/javascript" src="services/socket.js"></script>
+
+    </body>
+</html>
