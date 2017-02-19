@@ -10,7 +10,7 @@ angular.module('app')
     })
     this.emit = function(event, data, cb) {
         console.log("Emitting::", event, data);
-        socket.emit(event, data, function(response) {
+        socket.emit(event, {id: Session.user.id ,name:Session.user.name, data:data }, function(response) {
             if (cb) {
                 $timeout(function() {
                     cb(response);

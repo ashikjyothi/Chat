@@ -2,7 +2,9 @@ angular.module('app').controller('frontpageController', ['$scope', '$document', 
     $scope.user = Session.user.username;
     $scope.enterRoom = function(room) {
         Socket.emit('joinRoom', room, function(res) {
+            console.log("joint");
             $state.go('chat')
+            // window.location('/chat')
         })
     }
     Socket.emit("getRooms", {}, function(res) {

@@ -45,10 +45,10 @@ angular.module('app')
             } else if (!Session.user && toState.url != '/login') {
                 e.preventDefault();
                 $state.go('login')
-            } else if (Session.user && toState.url == '/login') {
-                e.preventDefault();
-                $state.go('chat')
-             } //else if (Session.user && toState.url == '/frontpage') {
+            } //else if (Session.user && toState.url == '/chat') {    //login
+            //     // e.preventDefault();
+            //     $state.go('chat')
+            //  } //else if (Session.user && toState.url == '/frontpage') {
             //     e.preventDefault();
             //     $state.go('frontpage') 
             // }

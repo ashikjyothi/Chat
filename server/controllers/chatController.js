@@ -25,15 +25,7 @@ module.exports = function(socket, conn, io) {
     }
 
     function addMessage(message, cb) {
-        // var post = {
-        //     sender: message.sender,
-        //     receiver: 'All',
-        //     type: 'group',
-        //     message: message.text,
-        //     room: message.room,
-        //     time: message.time
 
-        // };
         conn.query("INSERT INTO Message SET ?", [message], function(err, result) {
             if (err) {
                 console.log("Error:", err);
@@ -44,19 +36,19 @@ module.exports = function(socket, conn, io) {
             }
         });
     }
-    
     socket.on('initSocket', function(user) {
         // var u = new User()
-        Users.addUser(user.id, user.username);
+       var currentuser = Users.addUser(user.id, user.username);
         // console.log("USERS",un.users);
         console.log("NEW SOCKET ID::" + socket.id);
         conn.query("UPDATE User SET socketid = ? WHERE id = ?", [socket.id, user.id], function(err, result) {
             if (err) {
                 console.error('ERROR!::::::::::' + err);
             } else {
-               var un = Users.getUser(user.id);
+             var un = Users.getUser(user.id);
+                un.setSocketId(socket.id);
                 console.log("UN::::",un);
-                // un.setSocketId(socket.id);
+
                 console.log("SOCKETID CHANGED IN MYDB");
                 // console.log(result); 
             }
@@ -64,12 +56,14 @@ module.exports = function(socket, conn, io) {
     })
     
     socket.on('joinRoom', function(room,cb) {
-            conn.query("SELECT * FROM `Room` WHERE roomname = ?",[room], function(error, results) {
+        var currentuser = var currentuser = Users.addUser(user.id, user.username);
+            conn.query("SELECT * FROM `Room` WHERE `roomname` = ?",[room.data], function(error, results) {
+                console.log("inside query:::",results);
             if (error) {
                 console.log("error:", error);
             } else if(results.length == 0){
                 console.log("NEW ROOM");
-                conn.query("INSERT INTO `Rooms` SET ?",[room],function(err,res){
+                conn.query("INSERT INTO `Rooms` SET ?",[room.data],function(err,res){
                     if(err){
                         console.log("error:", error);
                     }
@@ -77,7 +71,14 @@ module.exports = function(socket, conn, io) {
                         console.log("ROOM SAVED IN MYDB");
                     }
                 })
+            }else {
+                currentuser.joinRoom(room,function(res){
+                    console.log(Users.users);
+                });
+                
+
             }
+
         });        
         // clientInfo.socketID = {
         //     name: req.name,
@@ -90,6 +91,7 @@ module.exports = function(socket, conn, io) {
         //     time: "",
         //     room: req.room
         // })
+        cb();
     })
     
     console.log("Connected");

@@ -20,6 +20,7 @@ module.exports = (io) => class User {
 		}
 
 		joinRoom(room, cb) {
+			console.log("inside joinRoom::");
 			this.room = room;
 			io.sockets.connected[this.socketId].join(room);
 			if (cb) {cb();}
