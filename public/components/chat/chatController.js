@@ -1,36 +1,47 @@
 angular.module('app')
 .controller('chatController', ['$scope', '$document', 'Socket', 'Session', '$state', '$timeout', function($scope, $document, Socket, Session, $state, $timeout) {
+    
     $scope.user = Session.user.username;
     // $scope.room = Session.room;
     $scope.disconnect = function() {
-        Socket.emit('logout', $scope.user, function() {
-            console.log('Logout success')
-            Session.clearUser(function() {
-                $state.go('login', {});
-            })
-        })
+        window.location('/logout');
+        // Socket.emit('logout', $scope.user, function() {
+        //     console.log('Logout success')
+        //     Session.clearUser(function() {
+        //         $state.go('login', {});
+        //     })
+        // })
     }
     $scope.sendMessage = function(text) {
-        if (text && text.substr(0, 1) === '/') {
-            var privatemsg = {};
-            privatemsg.sender = $scope.user;
-            privatemsg.user = text.substr(1, text.indexOf(' '));
-            privatemsg.user = privatemsg.user.trim();
-            privatemsg.msg = text.substring(text.indexOf(' '));
-            privatemsg.room = $scope.room;
-            $scope.messageInput = "";
-            Socket.emit("PrivateMsg", privatemsg, function(response) {
-                console.log("PrivateMsg response:" + response);
-            });
-        } else {
+
             var timestamp = moment().valueOf();
             var momentTime = moment.utc(timestamp);
             momentTime = momentTime.local().format('h:mm a');
+
+        if (text && text.substr(0, 1) === '/') {
+            var pm = {};
+            pm.sender = $scope.user;
+            pm.receiver = text.substr(1, text.indexOf(' '));
+            pm.receiver = pm.receiver.trim();
+            pm.type = 'private';
+            pm.message = text.substring(text.indexOf(' '));
+            pm.room = $scope.room;
+            pm.time = momentTime;
+            $scope.messageInput = "";
+            console.log("client pm:",pm);
+            Socket.emit("PrivateMsg", pm, function(response) {
+                console.log("PrivateMsg response:" + response);
+            });
+        } else {
+
             var newMessage = {
                 sender: $scope.user,
-                text: text,
-                time: momentTime,
-                room: $scope.room
+                receiver: 'All',
+                type: 'group',
+                message: text,
+                room: $scope.room,
+                time: momentTime
+                
             }
             Socket.emit("chatMessage", newMessage, function(response) {
                 if (response == 'success') {

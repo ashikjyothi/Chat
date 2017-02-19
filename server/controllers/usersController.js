@@ -1,10 +1,16 @@
 'use strict';
+module.exports = function(io){
 
-var User = require('./userController');
 
-class Users {
+var User = require('./userController')();
+
+ return class Users {
 	constructor() {
 		this.users = {};
+	}
+
+	getAllUsers() {
+		return this.users;
 	}
 
 	addUser(id, username) {
@@ -18,4 +24,7 @@ class Users {
 	removeUser(id) {
 		delete this.users[id];
 	}
+}
+
+// module.exports = Users
 }

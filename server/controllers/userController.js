@@ -1,13 +1,12 @@
 'use strict';
 
-module.exports = function(io) {
-
-	class User {
+module.exports = (io) => class User {
 		constructor(id, username) {
 			this.id = id;
 			this.username = username;
 			this.socketId = '';
 			this.room = '';
+			console.log("inside user",this.id,this.username);
 		}
 
 		sendMessage(message, cb) {
@@ -26,5 +25,3 @@ module.exports = function(io) {
 			if (cb) {cb();}
 		}
 	}
-
-}

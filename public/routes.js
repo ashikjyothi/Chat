@@ -14,6 +14,14 @@ angular.module('app')
                     }
                 }
             })
+            .state('frontpage', {
+                url: '/frontpage',
+                views: {
+                    'content': {
+                        templateUrl: 'components/frontpage/frontpage.html'
+                    }
+                }
+            })
             .state('chat', {
                 url: '/chat',
                 views: {
@@ -26,11 +34,11 @@ angular.module('app')
     }])
     .run(['$rootScope', '$state', 'Session', function ($rootScope, $state, Session) {
         $rootScope.$on('$stateChangeStart', function (e, toState) {
-            console.log('hereeeeeeeeeeeeeeeee')
+            console.log('inside .run')
             if (toState.url == '/') {
                 e.preventDefault();
                 if (Session.user) {
-                    $state.go('chat')
+                    $state.go('frontpage')
                 } else {
                     $state.go('login')
                 }
@@ -40,7 +48,10 @@ angular.module('app')
             } else if (Session.user && toState.url == '/login') {
                 e.preventDefault();
                 $state.go('chat')
-            }
+             } //else if (Session.user && toState.url == '/frontpage') {
+            //     e.preventDefault();
+            //     $state.go('frontpage') 
+            // }
             return;
         });
     }])

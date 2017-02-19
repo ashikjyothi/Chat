@@ -3,7 +3,9 @@ angular.module('app')
     var socket = io();
     socket.on('connect', function() {
         if (Session.user) {
-            socket.emit('initSocket', Session.user.id)
+            socket.emit('initSocket', Session.user)
+            console.log("INITSOCKET::",Session.user);
+
         }
     })
     this.emit = function(event, data, cb) {

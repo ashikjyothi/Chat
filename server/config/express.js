@@ -53,7 +53,8 @@ module.exports = function(mysql) {
     // Serving static files
     app.use(express.static(path.join(__dirname, '../../public')));
 
-    require('../routes.js')(app, mysql);
+    require('../routes.js')(app,passport);
+    // require('../routes.js')(app, mysql);
     require('./socketio.js')(server, mysql);
 
     return app;
