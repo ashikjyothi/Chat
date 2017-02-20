@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (io) => class User {
-		constructor(id, username) {
+			constructor(id, username) {
 			this.id = id;
 			this.username = username;
 			this.socketId = '';

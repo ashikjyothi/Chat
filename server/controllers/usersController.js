@@ -2,7 +2,7 @@
 module.exports = function(io){
 
 
-var User = require('./userController')();
+var User = require('./userController')(io);
 
  return class Users {
 	constructor() {

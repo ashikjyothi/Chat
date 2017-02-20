@@ -56,7 +56,7 @@ module.exports = function(socket, conn, io) {
     })
     
     socket.on('joinRoom', function(room,cb) {
-        var currentuser = var currentuser = Users.addUser(user.id, user.username);
+        var currentuser = Users.getUser(room.id);
             conn.query("SELECT * FROM `Room` WHERE `roomname` = ?",[room.data], function(error, results) {
                 console.log("inside query:::",results);
             if (error) {
@@ -72,8 +72,9 @@ module.exports = function(socket, conn, io) {
                     }
                 })
             }else {
-                currentuser.joinRoom(room,function(res){
+                currentuser.joinRoom(room.data,function(res){
                     console.log(Users.users);
+                    console.log("ROOM",Users.users[room.id].room);
                 });
                 
 
